@@ -1,0 +1,79 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: 书旗小说ZIYE版
+
+on:
+  workflow_dispatch:
+  schedule:
+     - cron: '8 6-16 * * *'
+  watch:
+    types: started
+#env:
+  #TZ: Asia/Shanghai
+
+jobs:
+  build1:
+    env:
+      duilie: 1
+      PUSH_KEY: ${{ secrets.PUSH_KEY }}
+      BARK_PUSH: ${{ secrets.BARK_PUSH }}
+
+
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout
+        run: |
+          git clone https://github.com/adw2s/Action.git ~/Scripts
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: npm install
+        run: |
+          cd ~/Scripts
+          npm install -g npm
+          npm update
+
+      - name: '运行 【shu旗小说1】'
+        run: |
+          cd ~/Scripts
+          node Task/13sqxszy.js
+        env:
+          duilie: 1
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+          BARK_PUSH: ${{ secrets.BARK_PUSH }}
+
+
+  build2:
+    env:
+      duilie: 2
+      PUSH_KEY: ${{ secrets.PUSH_KEY }}
+      BARK_PUSH: ${{ secrets.BARK_PUSH }}
+
+
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout
+        run: |
+          git clone https://github.com/adw2s/Action.git ~/Scripts
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: npm install
+        run: |
+          cd ~/Scripts
+          npm install -g npm
+          npm update
+
+      - name: '运行 【shu旗小说2】'
+        run: |
+          cd ~/Scripts
+          node Task/13sqxszy.js
+        env:
+          duilie: 2
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
+          BARK_PUSH: ${{ secrets.BARK_PUSH }}
