@@ -25,20 +25,20 @@ jobs:
     steps:
       - name: Checkout
         run: |
-          git clone https://github.com/heeroyuy7/heeroyuy7.git ~/Scripts
+          git clone https://github.com/heeroyuy7/heeroyuy7.git ~/heeroyuy7
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
       - name: npm install
         run: |
-          cd ~/Scripts
+          cd ~/heeroyuy7
           npm install -g npm
           npm update
 
       - name: '运行 【shu旗小说1】'
         run: |
-          cd ~/Scripts
+          cd ~/heeroyuy7
           node Task/13sqxszy.js
         env:
           duilie: 1
@@ -58,20 +58,20 @@ jobs:
     steps:
       - name: Checkout
         run: |
-          git clone https://github.com/heeroyuy7/heeroyuy7.git ~/Scripts
+          git clone https://github.com/heeroyuy7/heeroyuy7.git ~/heeroyuy7
       - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
       - name: npm install
         run: |
-          cd ~/Scripts
+          cd ~/heeroyuy7
           npm install -g npm
           npm update
 
       - name: '运行 【shu旗小说2】'
         run: |
-          cd ~/Scripts
+          cd ~/heeroyuy7
           node Task/13sqxszy.js
         env:
           duilie: 2
