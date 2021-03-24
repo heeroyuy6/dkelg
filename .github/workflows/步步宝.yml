@@ -22,6 +22,6 @@ jobs:
                   npm install
             - name: "运行【步步宝】"
               run: |
-                  node Task/bbb.js
+                  node Task/bububao.js
               env:
                   BBB_COOKIES: ${{ secrets.BBB_COOKIES }}
