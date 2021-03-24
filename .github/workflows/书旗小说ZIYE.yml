@@ -29,7 +29,7 @@ jobs:
       - name: '运行 【书旗小说】'     
         run: |
           cd ~/heeroyuy7
-          node Task/xiaole.js
+          node Task/shuqi.js
         env:
           
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
