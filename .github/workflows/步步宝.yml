@@ -24,4 +24,4 @@ jobs:
               run: |
                   node Task/bububao.js
               env:
-                  BBB_COOKIES: ${{ secrets.BBB_COOKIES }}
+                  bububaotokenVal: ${{ secrets.bububaotokenVal }}
