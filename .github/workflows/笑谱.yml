@@ -1,4 +1,4 @@
-name: 书旗小说
+name: 笑谱
 
 on:
   workflow_dispatch:
