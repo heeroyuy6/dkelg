@@ -3,7 +3,7 @@ name: 笑谱
 on:
   workflow_dispatch:
   schedule:
-     - cron: '58 0,1,16-23 * * *'
+     - cron: '3 13 * * *'
   watch:
     types: started
 #env:
