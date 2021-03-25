@@ -14,11 +14,19 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-        ysmurl: ${{ secrets.ysmurl }}
-        ysmhd: ${{ secrets.ysmhd }}
-        ysmbody: ${{ secrets.ysmbody }}
-        ysm2body: ${{ secrets.ysm2body }}
-        ysmtx: ${{ secrets.ysmtx }}
+       env:
+      YSMURL: ${{ secrets.YSMURL }}
+      YSMHD: ${{ secrets.YSMHD }}
+      YSMBODY: ${{ secrets.YSMBODY }}
+      YSM2BODY: ${{ secrets.YSM2BODY }}
+      YSMTX: ${{ secrets.YSMTX }}
+      PUSH_KEY: ${{ secrets.PUSH_KEY }}
+      BARK_PUSH: ${{ secrets.BARK_PUSH }}
+      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+      TG_USER_ID: ${{ secrets.TG_USER_ID }}
+      BARK_SOUND: ${{ secrets.BARK_SOUND }}
+      DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+      DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
     steps:
       - name: Checkout
         run: |
@@ -38,10 +46,8 @@ jobs:
           node Task/ysm.js
         env:
           
-          PUSH_KEY: ${{ secrets.PUSH_KEY }}
-          BARK_PUSH: ${{ secrets.BARK_PUSH }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_USER_ID: ${{ secrets.TG_USER_ID }}
-          BARK_SOUND: ${{ secrets.BARK_SOUND }}
-          DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
-          DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+          YSMURL: ${{ secrets.YSMURL }}
+          YSMHD: ${{ secrets.YSMHD }}
+          YSMBODY: ${{ secrets.YSMBODY }}
+          YSM2BODY: ${{ secrets.YSM2BODY }}
+          YSMTX: ${{ secrets.YSMTX }}
