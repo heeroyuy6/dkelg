@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     env:
-       env:
       YSMURL: ${{ secrets.YSMURL }}
       YSMHD: ${{ secrets.YSMHD }}
       YSMBODY: ${{ secrets.YSMBODY }}
@@ -45,7 +44,6 @@ jobs:
           cd ~/heeroyuy7
           node Task/ysm.js
         env:
-          
           YSMURL: ${{ secrets.YSMURL }}
           YSMHD: ${{ secrets.YSMHD }}
           YSMBODY: ${{ secrets.YSMBODY }}
