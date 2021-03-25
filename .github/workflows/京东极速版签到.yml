@@ -1,4 +1,4 @@
-name: 京东极速版
+name: 京东极速版签到
 
 on:
   workflow_dispatch:
@@ -25,7 +25,7 @@ jobs:
         run: |
           cd ~/heeroyuy7
           npm install
-      - name: '运行 【京东极速版】'     
+      - name: '运行 【京东极速版签到】'     
         run: |
           cd ~/heeroyuy7
           node Task/jd_speed_sign.js
