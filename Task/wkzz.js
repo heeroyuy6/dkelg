@@ -65,19 +65,28 @@ let times = Math.round(Date.now() / 1000)
 let wkzzurl = '', wkzzhd = '',id = '',uid='',tid='',name=''
 
 if ($.isNode()) {
-  if (process.env.wkzzurl && process.env.wkzzurl.indexOf('#') > -1) {
-  wkzzurl = process.env.wkzzurl.split('#');
-  console.log(`您选择的是用"#"隔开\n`)
-  }
-  else if (process.env.wkzzurl && process.env.wkzzurl.indexOf('\n') > -1) {
-   wkzzurl = process.env.wkzzurl.split('\n');
+
+  if (process.env.WKZZURL && process.env.WKZZURL.indexOf('\n') > -1) {
+   wkzzurl = process.env.WKZZURL.split('\n');
    console.log(`您选择的是用换行隔开\n`)
   } else {
-   wkzzurl = process.env.wkzzurl.split()
+   wkzzurl = process.env.WKZZURL.split()
   };
   Object.keys(wkzzurl).forEach((item) => {
         if (wkzzurl[item]) {
-          ysm.push(JSON.parse(wkzzurl[item]))
+          wkzzurlArr.push(wkzzurl[item])
+        }
+    });
+
+  if (process.env.WKZZHD && process.env.WKZZHD.indexOf('\n') > -1) {
+   wkzzhd = process.env.WKZZHD.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   wkzzhd = process.env.WKZZHD.split()
+  };
+  Object.keys(wkzzhd).forEach((item) => {
+        if (wkzzhd[item]) {
+          wkzzhdArr.push(wkzzhd[item])
         }
     });
 
