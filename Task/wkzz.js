@@ -88,6 +88,31 @@ let wkzzurl = '', wkzzhd = '',id = '',uid='',tid='',name=''
   .finally(() => $.done())
 //微客众智数据获取
 
+if ($.isNode()) {
+
+   if (process.env.wkzzurl && process.env.wkzzurl.indexOf('\n') > -1) {
+   wkzzurl = process.env.wkzzurl.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   wkzzurl = process.env.wkzzurl.split()
+  };
+  Object.keys(wkzzurl).forEach((item) => {
+        if (wkzzurl[item]) {
+          cfzurlArr.push(wkzzurl[item])
+        }
+    });
+  if (process.env.wkzzhd && process.env.wkzzhd.indexOf('\n') > -1) {
+   wkzzhd = process.env.wkzzhd.split('\n');
+   console.log(`您选择的是用换行隔开\n`)
+  } else {
+   wkzzhd = process.env.wkzzhd.split()
+  };
+  Object.keys(wkzzhd).forEach((item) => {
+        if (wkzzhd[item]) {
+          wkzzhdArr.push(wkzzhd[item])
+        }
+    });
+
 
 async function wkzzck() {
   if ($request.url.indexOf("wx.tiantianaiyuedu.site/read/article") > -1) {
