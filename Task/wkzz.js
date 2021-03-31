@@ -62,6 +62,10 @@ hostname = wx.tiantianaiyuedu.site
 const $ = new Env('微客众智自动阅读');
 const wkzz = $.getjson('wkzz', [])
 
+let times = Math.round(Date.now() / 1000)
+let wkzzurl = '', wkzzhd = '',id = '',uid='',tid='',name=''
+
+
 if ($.isNode()) {
 
   if (process.env.WKZZURL && process.env.WKZZURL.indexOf('\n') > -1) {
@@ -90,16 +94,9 @@ if ($.isNode()) {
 
 
 
-let times = Math.round(Date.now() / 1000)
-let wkzzurl = '', wkzzhd = '',id = '',uid='',tid='',name=''
-
-
-
-
-
 
 !(async () => {
-  if (typeof $request !== "undefined") {
+  if (wkzz == "") { {
     await wkzzck()
   } else {
     let acList = wkzz.filter(o => o.id && o.hd).map((o, i) => ({no: i + 1, id: o.id, url: o.url, hd: o.hd}))
