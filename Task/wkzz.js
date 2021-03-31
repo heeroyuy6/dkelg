@@ -63,30 +63,6 @@ const $ = new Env('微客众智自动阅读');
 const wkzz = $.getjson('wkzz', [])
 let times = Math.round(Date.now() / 1000)
 let wkzzurl = '', wkzzhd = '',id = '',uid='',tid='',name=''
-!(async () => {
-  if (typeof $request !== "undefined") {
-    await wkzzck()
-  } else {
-    let acList = wkzz.filter(o => o.id && o.hd).map((o, i) => ({no: i + 1, id: o.id, url: o.url, hd: o.hd}))
-    $.log(`------------- 共${acList.length}个账号-------------\n`)
-    for (let i = 0; i < acList.length; i++) {
-      wkzzurl = acList[i].url
-      wkzzhd = acList[i].hd
-      $.log(`\n开始【微客众智${i + 1}】`)
-      let userInfo = await getUserInfo(wkzzhd)
-      id = userInfo.wxuser_id
-      if (id) {
-        $.log('\n微客众智获取用户信息成功\n当前用户名:' + userInfo.nickname + ' 用户ID:' + id + '\n开始查询任务信息')
-        await wkzzlb();
-      } else if (userInfo) {
-        $.log(userInfo)
-      }
-    }
-  }
-})()
-  .catch((e) => $.logErr(e))
-  .finally(() => $.done())
-//微客众智数据获取
 
 if ($.isNode()) {
 
@@ -112,6 +88,35 @@ if ($.isNode()) {
           wkzzhdArr.push(wkzzhd[item])
         }
     });
+
+
+
+
+!(async () => {
+  if (typeof $request !== "undefined") {
+    await wkzzck()
+  } else {
+    let acList = wkzz.filter(o => o.id && o.hd).map((o, i) => ({no: i + 1, id: o.id, url: o.url, hd: o.hd}))
+    $.log(`------------- 共${acList.length}个账号-------------\n`)
+    for (let i = 0; i < acList.length; i++) {
+      wkzzurl = acList[i].url
+      wkzzhd = acList[i].hd
+      $.log(`\n开始【微客众智${i + 1}】`)
+      let userInfo = await getUserInfo(wkzzhd)
+      id = userInfo.wxuser_id
+      if (id) {
+        $.log('\n微客众智获取用户信息成功\n当前用户名:' + userInfo.nickname + ' 用户ID:' + id + '\n开始查询任务信息')
+        await wkzzlb();
+      } else if (userInfo) {
+        $.log(userInfo)
+      }
+    }
+  }
+})()
+  .catch((e) => $.logErr(e))
+  .finally(() => $.done())
+//微客众智数据获取
+
 
 
 async function wkzzck() {
