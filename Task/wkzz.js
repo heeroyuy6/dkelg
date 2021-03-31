@@ -61,10 +61,15 @@ hostname = wx.tiantianaiyuedu.site
 
 const $ = new Env('微客众智自动阅读');
 const wkzz = $.getjson('wkzz', [])
+let times = Math.round(Date.now() / 1000)
+let wkzzurl = '', wkzzhd = '',id = '',uid='',tid='',name=''
 
 if ($.isNode()) {
-
-   if (process.env.wkzzurl && process.env.wkzzurl.indexOf('\n') > -1) {
+  if (process.env.wkzzurl && process.env.wkzzurl.indexOf('#') > -1) {
+  wkzzurl = process.env.wkzzurl.split('#');
+  console.log(`您选择的是用"#"隔开\n`)
+  }
+  else if (process.env.wkzzurl && process.env.wkzzurl.indexOf('\n') > -1) {
    wkzzurl = process.env.wkzzurl.split('\n');
    console.log(`您选择的是用换行隔开\n`)
   } else {
@@ -72,26 +77,9 @@ if ($.isNode()) {
   };
   Object.keys(wkzzurl).forEach((item) => {
         if (wkzzurl[item]) {
-          cfzurlArr.push(wkzzurl[item])
+          ysm.push(JSON.parse(wkzzurl[item]))
         }
     });
-  if (process.env.wkzzhd && process.env.wkzzhd.indexOf('\n') > -1) {
-   wkzzhd = process.env.wkzzhd.split('\n');
-   console.log(`您选择的是用换行隔开\n`)
-  } else {
-   wkzzhd = process.env.wkzzhd.split()
-  };
-  Object.keys(wkzzhd).forEach((item) => {
-        if (wkzzhd[item]) {
-          wkzzhdArr.push(wkzzhd[item])
-        }
-    });
-
-
-
-
-let times = Math.round(Date.now() / 1000)
-let wkzzurl = '', wkzzhd = '',id = '',uid='',tid='',name=''
 
 
 
@@ -121,8 +109,6 @@ let wkzzurl = '', wkzzhd = '',id = '',uid='',tid='',name=''
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
 //微客众智数据获取
-
-
 
 async function wkzzck() {
   if ($request.url.indexOf("wx.tiantianaiyuedu.site/read/article") > -1) {
