@@ -1,10 +1,10 @@
 /*
 软件名称:微客众智 微信扫描二维码打开
-更新时间：2021-03-16 @肥皂
+更新时间：2021-03-13 @肥皂
 脚本说明：微客众智自动阅读
 脚本为自动完成微客众智的阅读任务
 每日收益0.6元左右，可多号撸。
-类似番茄看看和云扫码,貌似没有任务冲突(划重点)
+类似番茄看看和云扫码,貌似没有任务冲突
 哈哈哈啊哈哈哈哈
 
 复制链接到微信打开 http://i.hylks.xyz/i/632723?sharefrom=hall&_target=hall
@@ -20,7 +20,6 @@
 
 TG电报群: https://t.me/hahaha8028
 
-3.16更新，加入自动提现，可提现余额大于等于两元自动提现
 
 boxjs地址 :  
 
@@ -60,125 +59,106 @@ hostname = wx.tiantianaiyuedu.site
 
 
 const $ = new Env('微客众智自动阅读');
-const wkzz = $.getjson('wkzz', [])
-
+let status;
+status = (status = ($.getval("wkzzstatus") || "1") ) > 1 ? `${status}` : ""; // 账号扩展字符
+let wkzzurlArr = [], wkzzhdArr = [],wkzzcount = ''
 let times = Math.round(Date.now() / 1000)
-let wkzzurl = '', wkzzhd = '',id = '',uid='',tid='',name=''
-
+let wkzzurl = $.getdata('wkzzurl')
+let wkzzhd = $.getdata('wkzzhd')
+let wkzzkey = '',id = '',uid='',tid='',name=''
+let max = 60
+let min = 17
 
 if ($.isNode()) {
-
-  if (process.env.WKZZURL && process.env.WKZZURL.indexOf('\n') > -1) {
-   wkzzurl = process.env.WKZZURL.split('\n');
+  if (process.env.WKZZ_HD && process.env.WKZZ_HD.indexOf('\n') > -1) {
+   wkzzhdArr = process.env.WKZZ_HD.split('\n');
    console.log(`您选择的是用换行隔开\n`)
   } else {
-   wkzzurl = process.env.WKZZURL.split()
+   wkzzhdArr = process.env.WKZZ_HD.split()
   };
-  Object.keys(wkzzurl).forEach((item) => {
-        if (wkzzurl[item]) {
-          wkzzurlArr.push(wkzzurl[item])
-        }
-    });
-
-  if (process.env.WKZZHD && process.env.WKZZHD.indexOf('\n') > -1) {
-   wkzzhd = process.env.WKZZHD.split('\n');
-   console.log(`您选择的是用换行隔开\n`)
-  } else {
-   wkzzhd = process.env.WKZZHD.split()
-  };
-  Object.keys(wkzzhd).forEach((item) => {
-        if (wkzzhd[item]) {
-          wkzzhdArr.push(wkzzhd[item])
-        }
-    });
-
-
+  
+    console.log(`============ 脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}  =============\n`)
+    console.log(`============ 脚本执行-北京时间(UTC+8)：${new Date(new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()}  =============\n`)
+ } else {wkzzurlArr.push($.getdata('wkzzurl'))
+    wkzzhdArr.push($.getdata('wkzzhd'))
+    let wkzzcount = ($.getval('wkzzcount') || '1');
+  for (let i = 2; i <= wkzzcount; i++) {
+    wkzzurlArr.push($.getdata(`wkzzurl${i}`))
+    wkzzhdArr.push($.getdata(`wkzzhd${i}`))
+  }
+}
 
 
 !(async () => {
-  if (wkzz == "") { {
-    await wkzzck()
-  } else {
-    let acList = wkzz.filter(o => o.id && o.hd).map((o, i) => ({no: i + 1, id: o.id, url: o.url, hd: o.hd}))
-    $.log(`------------- 共${acList.length}个账号-------------\n`)
-    for (let i = 0; i < acList.length; i++) {
-      wkzzurl = acList[i].url
-      wkzzhd = acList[i].hd
-      $.log(`\n开始【微客众智${i + 1}】`)
-      let userInfo = await getUserInfo(wkzzhd)
-      id = userInfo.wxuser_id
-      if (id) {
-        $.log('\n微客众智获取用户信息成功\n当前用户名:' + userInfo.nickname + ' 用户ID:' + id + '\n开始查询任务信息')
-        await wkzzlb();
-      } else if (userInfo) {
-        $.log(userInfo)
-      }
-    }
+if (!wkzzhdArr[0]) {
+    $.msg($.name, '【提示】请先获取一cookie')
+    return;
   }
+    console.log(`------------- 共${wkzzhdArr.length}个账号-------------\n`)
+      for (let i = 0; i < wkzzhdArr.length; i++) {
+        if (wkzzhdArr[i]) {
+         
+          wkzzurl = wkzzurlArr[i];
+          wkzzhd = wkzzhdArr[i];
+          $.index = i + 1;
+          console.log(`\n开始【微客众智${$.index}】`)
+    await wkzz1();
+
+  }
+}
+
 })()
   .catch((e) => $.logErr(e))
   .finally(() => $.done())
 //微客众智数据获取
 
-async function wkzzck() {
-  if ($request.url.indexOf("wx.tiantianaiyuedu.site/read/article") > -1) {
-    const hd = JSON.stringify($request.headers);
-    let userInfo = await getUserInfo(hd)
-    if(userInfo.wxuser_id){
-      let status = 1
-      let no = wkzz.length
-      for (let i = 0, len = no; i < len; i++) {
-        let ac = wkzz[i] || {}
-        if (ac.id) {
-          if (ac.id == userInfo.wxuser_id) {
-            no = i
-            status = 0
-            break
-          }
-        } else if (no == len) {
-          no = i
-        }
-      }
-      wkzz[no] = {id: userInfo.wxuser_id, url: $request.url, hd: hd}
-      $.log(JSON.stringify(wkzz[no], null, 2))
-      $.setdata(JSON.stringify(wkzz, null, 2), 'wkzz')
-      $.msg($.name, "", `微客众智[账号${no+1}] ${status?'新增':'更新'}数据成功！`)
-    }
+
+function wkzzck() {
+   if ($request.url.indexOf("wx.tiantianaiyuedu.site/read/article") > -1) {
+ const wkzzurl = $request.url
+  if(wkzzurl)     $.setdata(wkzzurl,`wkzzurl${status}`)
+    $.log(wkzzurl)
+  const wkzzhd = JSON.stringify($request.headers)
+        if(wkzzhd)    $.setdata(wkzzhd,`wkzzhd${status}`)
+$.log(wkzzhd)
+   $.msg($.name,"",'微客众智'+`${status}` +'数据获取成功！')
   }
 }
 
-// 获取用户信息
-function getUserInfo(hd, timeout = 0) {
+
+
+//微客众智key
+function wkzz1(timeout = 0) {
   return new Promise((resolve) => {
-    let url = {
-      url: "http://wx.tiantianaiyuedu.site/me",
-      headers: JSON.parse(hd)
-    }
-    $.get(url, async (err, resp, data) => {
-      if (resp.statusCode == 301) {
-        $.log('\n微客众智访问失败，可能是Cookie过期或网络问题')
-        $.msg('微客众智Cookie过期', '', '请重新抓包获取数据，建议保持微客众智的重写在开启状态')
-      }
-      let userInfo = ''
-      try {
-        if (err) {
-          $.logErr(`❌ API请求失败，请检查网络后重试\n url: ${url.url} \n data: ${JSON.stringify(err, null, 2)}`)
-        } else {
-          if (resp.statusCode != 301) {
-            let result = $.toObj(data)
-            if (result.errors == false) {
-              userInfo = result.data
-            } else {
-              userInfo = '微客众智获取用户信息失败 已停止当前账号运行!'
-            }
-          }
+
+let url = {
+        url : "http://wx.tiantianaiyuedu.site/me",
+        headers : JSON.parse(wkzzhd),
+        
+}
+      $.get(url, async (err, resp, data) => {
+if(resp.statusCode == 301){
+$.log('\n微客众智访问失败，可能是Cookie过期或网络问题')
+$.msg('微客众智Cookie过期','','请重新抓包获取数据，建议保持微客众智的重写在开启状态')
+}
+        try {
+          //console.log(data)
+    const result = JSON.parse(data)
+        if(result.errors == false){
+   id = result.data.wxuser_id
+        console.log('\n微客众智获取用户信息成功\n当前用户名:'+result.data.nickname+' 用户ID:'+id+'\n开始查询任务信息')
+await wkzzlb();      
+        
+} else {
+console.log('微客众智获取用户信息失败 已停止当前账号运行!')
+
+}
+        } catch (e) {
+          //$.logErr(e, resp);
+        } finally {
+          resolve()
         }
-      } catch (e) {
-        //$.logErr(e, resp);
-      } finally {
-        resolve(userInfo)
-      }
-    })
+    },timeout)
   })
 }
 
