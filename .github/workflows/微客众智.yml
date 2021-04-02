@@ -25,7 +25,7 @@ jobs:
         run: |
           cd ~/heeroyuy7
           npm install
-      - name: '运行 【书旗小说】'     
+      - name: '运行 【微客众智】'     
         run: |
           cd ~/heeroyuy7
           node Task/wkzz.js
