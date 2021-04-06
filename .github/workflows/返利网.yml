@@ -20,7 +20,7 @@ jobs:
           node-version: 12.x
       - name: npm install
         run: |
-          cd ~/js
+          cd ~/heeroyuy7
           git checkout ZIYE
           npm install
       - name: '运行 【返利网】'
