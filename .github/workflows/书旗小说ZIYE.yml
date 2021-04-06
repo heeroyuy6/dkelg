@@ -25,6 +25,7 @@ jobs:
       - name: npm install
         run: |
           cd ~/heeroyuy7
+          git checkout ZIYE
           npm install
       - name: '运行 【书旗小说】'     
         run: |
