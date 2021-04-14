@@ -25,6 +25,7 @@ jobs:
           npm install
       - name: '运行 【聚看点】'
         run: |
+          cd ~/heeroyuy7
           node Task/jkd.js
         env:
           JKD_COOKIE: ${{ secrets.JKD_COOKIE }}
