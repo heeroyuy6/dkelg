@@ -19,7 +19,7 @@
 
 
 
-name: ziye-sync
+name: ZIYE-sync
 on:
   schedule:
     - cron: '1 */12 * * *'
