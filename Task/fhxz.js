@@ -26,8 +26,8 @@ const $ = new Env('富豪小镇');
  status = (status = ($.getval("fhxzstatus") || "1") ) > 1 ? `${status}` : ""; // 账号扩展字符 
  const fhxzurlArr = [], fhxzhdArr = [],fhxzcount = '' 
  let times = Math.round(Date.now() / 1000) 
- let fhxzurl = $.getdata('fhxzurl') 
- let fhxzhd = $.getdata('fhxzhd') 
+ let fhxzurl = process.env.fhxzurl
+ let fhxzhd = process.env.fhxzhd
  let sjs = 1 
 let cj = '[{"type":"lottery_draw","data":{"priceType":3001}}]'
 let gj = '[{"type":"pet_buyPet","data":{}}]'
@@ -78,8 +78,8 @@ let rw1 = '[{"type":"dailyQuest_receiveReward","data":{"questDefId":2001,"questT
  !(async () => { 
  if (typeof $request !== "undefined") { 
  await fhxzck() 
-   } else {fhxzurlArr.push($.getdata('fhxzurl')) 
- fhxzhdArr.push($.getdata('fhxzhd')) 
+   } else {fhxzurlArr.push(fhxzurl) 
+ fhxzhdArr.push(fhxzhd) 
  let fhxzcount = ($.getval('fhxzcount') || '1'); 
  for (let i = 2; i <= fhxzcount; i++) { 
  fhxzurlArr.push($.getdata(`fhxzurl${i}`)) 
