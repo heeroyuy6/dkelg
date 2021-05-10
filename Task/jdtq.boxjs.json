@@ -1,12 +1,12 @@
 {
     "id": "ziye.app.sub",
-    "name": "ziye 脚本订阅",
+    "name": "简单天气",
     "author": "@ZIYE",
     "icon": "https://cdn.jsdelivr.net/gh/ziye888/JavaScript@main/ziye.png",
     "repo": "https://github.com/ziye888",
     "apps": [{
             "id": "jdtq",
-            "name": "简单天气APP",
+            "name": "简单天气1APP",
             "keys": ["jdtquserbody", "jdtqcoinbody", "jdtqqpbody", "jdtqqp1body", "jdtqqp1fbbody", "jdtqqp2body", "jdtqqp2fbbody", "jdtqqp3body", "jdtqqp3fbbody", "jdtqqp4body"],
             "author": "@ziye",
             "settings": [{
