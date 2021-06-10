@@ -1,4 +1,4 @@
-name: 书旗小说ZIYE
+name: sj
 
 on:
   workflow_dispatch:
